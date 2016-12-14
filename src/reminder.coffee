@@ -96,7 +96,7 @@ module.exports = (robot) ->
       msg.reply "Sorry I'm unable to remove reminder ##{id}"
     msg.finish()
 
-  robot.respond /(?:remind|reminder|reminders)(?: me| us)? to\s*`([^]+)`\s*([^]+)/i, (msg) ->
+  robot.respond /(?:remind|reminder|reminders)(?: me| us)? to \s*([^]+) \s*((?:at|every)[^]+)/i, (msg) ->
     [ __, text, time ] = msg.match
     room = msg.message.room
 
@@ -106,7 +106,7 @@ module.exports = (robot) ->
       next = moment later.schedule(sched).next(1, Date.now())
       msg.reply "Reminder ##{getReminders().length - 1} has been scheduled to run in <##{room}> #{time} and will next run #{next.fromNow()}"
     else
-      msg.reply "Sorry I don't understand when to set the reminder for :cry:"
+      msg.reply "Sorry I don't understand when to set the reminder for :'("
     msg.finish()
 
   robot.brain.once 'loaded', ->
